@@ -37,6 +37,16 @@
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>
+                                <Span Text="{Static fa:IconFont.LocationArrow}" />
+                                <Span Text=" " />
+                                <Span Text="Location" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label FontSize="Medium" FontFamily="FA-solid">
+                        <Label.FormattedText>
+                            <FormattedString>
                                 <Span Text="{Static fa:IconFont.Tag}"/>
                                 <Span Text=" " />
                                 <Span Text="Price" />
