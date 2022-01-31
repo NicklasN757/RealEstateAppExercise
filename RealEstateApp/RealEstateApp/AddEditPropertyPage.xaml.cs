@@ -1,8 +1,11 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +15,7 @@ namespace RealEstateApp
     public partial class AddEditPropertyPage : ContentPage
     {
         private IRepository Repository;
+        CancellationTokenSource cts;
 
         #region PROPERTIES
         public ObservableCollection<Agent> Agents { get; }
@@ -100,6 +104,15 @@ namespace RealEstateApp
         private async void CancelSave_Clicked(object sender, System.EventArgs e)
         {
             await Navigation.PopToRootAsync();
+        }
+
+        private async void btnLocateMe_Clicked(object sender, System.EventArgs e)
+        {
+            var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+            cts = new CancellationTokenSource();
+            var location = await Geolocation.GetLocationAsync(request, cts.Token);
+            LatitudeLabel.Text = location.Latitude.ToString();
+            LongitudeLabel.Text = location.Longitude.ToString();
         }
     }
 }

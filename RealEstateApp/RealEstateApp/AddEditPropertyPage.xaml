@@ -34,6 +34,7 @@
                     </Label>
                     <Entry FontSize="Medium" Text="{Binding Property.Address}" />
 
+                    <!--#region 3.1-->
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>
@@ -43,7 +44,14 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-
+                    <StackLayout Orientation="Horizontal">
+                        <Label HorizontalOptions="StartAndExpand" VerticalOptions="End" x:Name="LongitudeLabel" />
+                        <Label HorizontalOptions="CenterAndExpand" VerticalOptions="End" x:Name="LatitudeLabel" />
+                        <Button HorizontalOptions="EndAndExpand" Text="Locate Me" 
+                                x:Name="btnLocateMe" Clicked="btnLocateMe_Clicked"/>
+                    </StackLayout>
+                    <!--#endregion-->
+                    
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>
