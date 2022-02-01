@@ -81,7 +81,7 @@ namespace RealEstateApp
                 btnLocateMe.IsVisible = false;
                 btnShowCords.IsVisible = false;
             }
-         
+
             BindingContext = this;
         }
 

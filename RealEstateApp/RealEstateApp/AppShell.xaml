@@ -7,5 +7,6 @@
 
     <realestateapp:PropertyListPage Title="Poperties" IconImageSource="home.png"/>
     <realestateapp:AboutPage Title="About" />
+    <realestateapp:FlashLight Title="Flashlight"/>
 
 </Shell>
