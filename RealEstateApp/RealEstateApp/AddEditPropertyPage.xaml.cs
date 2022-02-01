@@ -106,13 +106,29 @@ namespace RealEstateApp
             await Navigation.PopToRootAsync();
         }
 
+        #region Opgave 3.1
         private async void btnLocateMe_Clicked(object sender, System.EventArgs e)
         {
-            var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
-            cts = new CancellationTokenSource();
-            var location = await Geolocation.GetLocationAsync(request, cts.Token);
-            LatitudeLabel.Text = location.Latitude.ToString();
-            LongitudeLabel.Text = location.Longitude.ToString();
+            try
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+                cts = new CancellationTokenSource();
+                var location = await Geolocation.GetLocationAsync(request, cts.Token);
+
+                if (location != null)
+                {
+                    LatitudeLabel.Text = location.Latitude.ToString();
+                    Property.Latitude = location.Latitude;
+                    LongitudeLabel.Text = location.Longitude.ToString();
+                    Property.Longitude = location.Longitude;
+                }
+            }
+            catch (Exception)
+            {
+                cts.Cancel();
+            }
+            
         }
+        #endregion
     }
 }
