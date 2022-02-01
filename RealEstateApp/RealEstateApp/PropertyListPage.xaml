@@ -9,7 +9,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddProperty_Clicked" />
-        <ToolbarItem IconImageSource="fa_sort_amount_asc.png" />
+        <ToolbarItem x:Name="btnSortDistance" IconImageSource="fa_sort_amount_asc.png" Clicked="btnSortDistance_Clicked" />
     </ContentPage.ToolbarItems>
     
     <StackLayout>
@@ -102,6 +102,8 @@
                                     Grid.Row="3"
                                     FontSize="13"
                                     Text="{Binding Property.LandSize, StringFormat='Land Size: {0} &#x33a1;'}" />
+                                <Label Grid.Row="4" FontSize="13"
+                                       Text="{Binding Distance, StringFormat='{0:n0} Km away'}" />
                             </Grid>
                         </Grid>
                     </ViewCell>

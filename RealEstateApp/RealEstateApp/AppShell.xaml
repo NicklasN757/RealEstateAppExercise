@@ -5,7 +5,7 @@
        xmlns:fa="clr-namespace:FontAwesome"
        x:Class="RealEstateApp.AppShell">
 
-    <realestateapp:PropertyListPage Title="Poperties" />
+    <realestateapp:PropertyListPage Title="Poperties" IconImageSource="home.png"/>
     <realestateapp:AboutPage Title="About" />
 
 </Shell>

@@ -1,8 +1,12 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +16,8 @@ namespace RealEstateApp
     public partial class PropertyListPage : ContentPage
     {
         IRepository Repository;
+        CancellationTokenSource cts;
+
         public ObservableCollection<PropertyListItem> PropertiesCollection { get; } = new ObservableCollection<PropertyListItem>(); 
 
         public PropertyListPage()
@@ -37,14 +43,33 @@ namespace RealEstateApp
             list.IsRefreshing = false;
         }
 
-        void LoadProperties()
+        async void LoadProperties()
         {
+            Location PhoneLocation = await Geolocation.GetLastKnownLocationAsync();
+            if (PhoneLocation == null)
+            {
+                try
+                {
+                    var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+                    cts = new CancellationTokenSource();
+                    PhoneLocation = await Geolocation.GetLocationAsync(request, cts.Token);
+                }
+                catch (Exception)
+                {
+                    cts.Cancel();
+                }
+            }
+
             PropertiesCollection.Clear();
             var items = Repository.GetProperties();
 
             foreach (Property item in items)
             {
-                PropertiesCollection.Add(new PropertyListItem(item));
+                Location PropertyLocation = new Location((double)item.Latitude, (double)item.Longitude);
+
+                PropertyListItem propertyListItem = new PropertyListItem(item);
+                propertyListItem.Distance = Location.CalculateDistance(PhoneLocation, PropertyLocation, DistanceUnits.Kilometers);
+                PropertiesCollection.Add(propertyListItem);
             }
         }
 
@@ -56,6 +81,17 @@ namespace RealEstateApp
         private async void AddProperty_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AddEditPropertyPage());
-        }    
+        }
+
+        private void btnSortDistance_Clicked(object sender, EventArgs e)
+        {
+            List<PropertyListItem> propertyListItems = PropertiesCollection.OrderBy(p => p.Distance).ToList();
+
+            PropertiesCollection.Clear();
+            foreach (PropertyListItem item in propertyListItems)
+            {
+                PropertiesCollection.Add(item);
+            }
+        }
     }
 }
