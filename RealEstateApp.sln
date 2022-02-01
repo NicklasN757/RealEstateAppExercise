@@ -9,13 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstateApp", "RealEstate
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{43B1C508-F9FB-4B7E-9A5D-7E894CDD584A}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\About.png = ..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\About.png
-		..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\Add.png = ..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\Add.png
-		..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\DetailView.png = ..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\DetailView.png
-		..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\EditView.png = ..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\EditView.png
-		..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\PropertiesList.png = ..\..\..\Dropbox\Billeder\iLearn billeder\AppProg2\1. RealEstateApp\PropertiesList.png
 		README.md = README.md
-		SeedingRepository.txt = SeedingRepository.txt
 	EndProjectSection
 EndProject
 Global

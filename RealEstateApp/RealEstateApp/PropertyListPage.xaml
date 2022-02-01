@@ -9,6 +9,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddProperty_Clicked" />
+        <ToolbarItem IconImageSource="fa_sort_amount_asc.png" />
     </ContentPage.ToolbarItems>
     
     <StackLayout>
