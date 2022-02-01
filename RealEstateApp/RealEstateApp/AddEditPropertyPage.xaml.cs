@@ -111,16 +111,30 @@ namespace RealEstateApp
         {
             try
             {
-                var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
                 cts = new CancellationTokenSource();
-                var location = await Geolocation.GetLocationAsync(request, cts.Token);
+                Location location = await Geolocation.GetLocationAsync(request, cts.Token);
 
                 if (location != null)
                 {
+                    var placemarks = await Geocoding.GetPlacemarksAsync(location);
+                    Placemark placemark = placemarks.FirstOrDefault();
+
+                    if (placemark != null)
+                    {
+                        string geocodeAddress = $"{placemark.Thoroughfare} {placemark.SubThoroughfare}, " +
+                            $"{placemark.Locality} {placemark.PostalCode}, " +
+                            $"{placemark.CountryName}";
+
+                        Property.Address = geocodeAddress;
+                    }
+
                     LatitudeLabel.Text = location.Latitude.ToString();
-                    Property.Latitude = location.Latitude;
                     LongitudeLabel.Text = location.Longitude.ToString();
+
+                    Property.Latitude = location.Latitude;
                     Property.Longitude = location.Longitude;
+                    
                 }
             }
             catch (Exception)
@@ -130,5 +144,25 @@ namespace RealEstateApp
             
         }
         #endregion
+
+        private async void btnShowCords_Clicked(object sender, EventArgs e)
+        {
+            if (Property.Address != null)
+            {
+                var locations = await Geocoding.GetLocationsAsync(Property.Address);
+                Location location = locations.FirstOrDefault();
+
+                if (location != null)
+                {
+                    LatitudeLabel.Text = location.Latitude.ToString();
+                    LongitudeLabel.Text = location.Longitude.ToString();
+                }
+            }
+            else
+            {
+                await DisplayAlert("Warning!", "Please add a address!", "ADD NOW");
+                AddressEntryField.Focus();
+            }
+        }
     }
 }

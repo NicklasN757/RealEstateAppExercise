@@ -32,9 +32,8 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Entry FontSize="Medium" Text="{Binding Property.Address}" />
+                    <Entry FontSize="Medium" x:Name="AddressEntryField" Text="{Binding Property.Address}" />
 
-                    <!--#region 3.1-->
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>
@@ -45,12 +44,13 @@
                         </Label.FormattedText>
                     </Label>
                     <StackLayout Orientation="Horizontal">
-                        <Label HorizontalOptions="StartAndExpand" VerticalOptions="End" x:Name="LongitudeLabel" />
-                        <Label HorizontalOptions="CenterAndExpand" VerticalOptions="End" x:Name="LatitudeLabel" />
+                        <Label HorizontalOptions="StartAndExpand" VerticalOptions="End" x:Name="LatitudeLabel" Text="0.0"/>
+                        <Label HorizontalOptions="CenterAndExpand" VerticalOptions="End" x:Name="LongitudeLabel" Text="0.0"/>
                         <Button HorizontalOptions="EndAndExpand" Text="{Static fa:IconFont.SearchLocation}" 
                                 x:Name="btnLocateMe" Clicked="btnLocateMe_Clicked" FontFamily="FA-solid"/>
+                        <Button HorizontalOptions="End" Text="{Static fa:IconFont.Home}"
+                                x:Name="btnShowCords" Clicked="btnShowCords_Clicked" FontFamily="FA-solid"/>
                     </StackLayout>
-                    <!--#endregion-->
                     
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
