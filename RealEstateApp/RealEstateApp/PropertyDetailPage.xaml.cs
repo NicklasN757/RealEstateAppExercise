@@ -1,7 +1,9 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
 using System.Linq;
+using System.Threading;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +12,7 @@ namespace RealEstateApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PropertyDetailPage : ContentPage
     {
+        CancellationTokenSource cts;
         public PropertyDetailPage(PropertyListItem propertyListItem)
         {
             InitializeComponent();
@@ -29,6 +32,24 @@ namespace RealEstateApp
         private async void EditProperty_Clicked(object sender, System.EventArgs e)
         {
             await Navigation.PushAsync(new AddEditPropertyPage(Property));
+        }
+
+        private async void btnPlayText_Clicked(object sender, System.EventArgs e)
+        {
+            cts = new CancellationTokenSource();
+            btnPlayText.IsEnabled = false;
+            btnPauseText.IsEnabled = true;
+            await TextToSpeech.SpeakAsync(Property.Description, cancelToken: cts.Token);
+            btnPlayText.IsEnabled = true;
+            btnPauseText.IsEnabled = false;
+            cts.Cancel();
+        }
+
+        private void btnPauseText_Clicked(object sender, System.EventArgs e)
+        {
+            cts.Cancel();
+            btnPlayText.IsEnabled = true;
+            btnPauseText.IsEnabled = false;
         }
     }
 }

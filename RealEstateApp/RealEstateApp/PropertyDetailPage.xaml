@@ -13,7 +13,7 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="FillAndExpand">
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
               Padding="15">
             <Image
                 Grid.Row="0"
@@ -80,8 +80,16 @@
                 Margin="0,0,0,20"
                 FontSize="14"
                 Text="{Binding Property.Description}" />
+            
+            <StackLayout Grid.Row="7" Orientation="Horizontal">
+                <Button HorizontalOptions="Start" FontFamily="FA-solid" Text="{Static fa:IconFont.Play}"
+                        x:Name="btnPlayText" Clicked="btnPlayText_Clicked"/>
+                <Button HorizontalOptions="End" FontFamily="FA-solid" Text="{Static fa:IconFont.Pause}"
+                        x:Name="btnPauseText" Clicked="btnPauseText_Clicked" IsEnabled="False"/>
+            </StackLayout>
+            
             <Label
-                Grid.Row="7"
+                Grid.Row="8"
                 FontAttributes="Bold"
                 FontSize="14"
                 Text="Listed by:" />
