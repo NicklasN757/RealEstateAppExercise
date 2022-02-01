@@ -72,6 +72,15 @@ namespace RealEstateApp
                 Title = "Edit Property";
                 Property = property;
             }
+
+            var current = Connectivity.NetworkAccess;
+
+            if (current != NetworkAccess.Internet)
+            {
+                DisplayAlert("Warning!", "No internet access!", "OK");
+                btnLocateMe.IsVisible = false;
+                btnShowCords.IsVisible = false;
+            }
          
             BindingContext = this;
         }
@@ -106,7 +115,6 @@ namespace RealEstateApp
             await Navigation.PopToRootAsync();
         }
 
-        #region Opgave 3.1
         private async void btnLocateMe_Clicked(object sender, System.EventArgs e)
         {
             try
@@ -143,7 +151,6 @@ namespace RealEstateApp
             }
             
         }
-        #endregion
 
         private async void btnShowCords_Clicked(object sender, EventArgs e)
         {
