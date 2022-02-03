@@ -32,8 +32,26 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Entry FontSize="Medium" Text="{Binding Property.Address}" />
+                    <Entry FontSize="Medium" x:Name="AddressEntryField" Text="{Binding Property.Address}" />
 
+                    <Label FontSize="Medium" FontFamily="FA-solid">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Static fa:IconFont.LocationArrow}" />
+                                <Span Text=" " />
+                                <Span Text="Location" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <StackLayout Orientation="Horizontal">
+                        <Label HorizontalOptions="StartAndExpand" VerticalOptions="End" x:Name="LatitudeLabel" Text="0.0"/>
+                        <Label HorizontalOptions="CenterAndExpand" VerticalOptions="End" x:Name="LongitudeLabel" Text="0.0"/>
+                        <Button HorizontalOptions="EndAndExpand" Text="{Static fa:IconFont.SearchLocation}" 
+                                x:Name="btnLocateMe" Clicked="btnLocateMe_Clicked" FontFamily="FA-solid"/>
+                        <Button HorizontalOptions="End" Text="{Static fa:IconFont.Home}"
+                                x:Name="btnShowCords" Clicked="btnShowCords_Clicked" FontFamily="FA-solid"/>
+                    </StackLayout>
+                    
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:fa="clr-namespace:FontAwesome"
+             xmlns:fa="clr-namespace:FontAwesome" 
+             xmlns:model="clr-namespace:RealEstateApp.Models"
              mc:Ignorable="d"
              x:Class="RealEstateApp.PropertyDetailPage"
              Title="{Binding Property.Address}">
@@ -13,7 +14,7 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="FillAndExpand">
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
               Padding="15">
             <Image
                 Grid.Row="0"
@@ -80,23 +81,44 @@
                 Margin="0,0,0,20"
                 FontSize="14"
                 Text="{Binding Property.Description}" />
+            
+            <StackLayout Grid.Row="7" Orientation="Horizontal">
+                <Button HorizontalOptions="Start" FontFamily="FA-solid" Text="{Static fa:IconFont.Play}"
+                        x:Name="btnPlayText" Clicked="btnPlayText_Clicked"/>
+                <Button HorizontalOptions="End" FontFamily="FA-solid" Text="{Static fa:IconFont.Pause}"
+                        x:Name="btnPauseText" Clicked="btnPauseText_Clicked" IsEnabled="False"/>
+            </StackLayout>
+
+            <Grid Grid.Row="8" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *">
+                <Label Text="Vendor:" FontAttributes="Bold"/>
+                <Label Grid.Row="1" FontFamily="FA-solid" Text="{Static fa:IconFont.UserCircle}"/>
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Property.Vendor.FullName}"/>
+                <Label Grid.Row="2" FontFamily="FA-solid" Text="{Static fa:IconFont.Envelope}"/>
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Property.Vendor.Email}" TextColor="Blue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="MailLabel" Tapped="MailLabel_Tapped"/>
+                    </Label.GestureRecognizers>    
+                </Label>
+                <Label Grid.Row="3" FontFamily="FA-solid" Text="{Static fa:IconFont.Phone}"/>
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Property.Vendor.Phone}" TextColor="Blue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="PhoneLabel" Tapped="PhoneLabel_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+            
             <Label
-                Grid.Row="7"
+                Grid.Row="9"
                 FontAttributes="Bold"
                 FontSize="14"
                 Text="Listed by:" />
-            <Grid Grid.Row="8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+            <Grid Grid.Row="10" ColumnDefinitions="Auto, *">
                 <Image
                     Grid.Column="0"
                     Source="{Binding Agent.ImageUrl}"
                     VerticalOptions="Start"
                     WidthRequest="100" />
-                <Grid Grid.Column="1"
-                      RowDefinitions="Auto,Auto,Auto">
+                <Grid Grid.Column="1" RowDefinitions="Auto,Auto,Auto">
                     <Label
                         Grid.Row="0"
                         FontAttributes="Bold"

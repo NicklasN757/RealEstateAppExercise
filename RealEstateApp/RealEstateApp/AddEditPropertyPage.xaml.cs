@@ -1,8 +1,11 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +15,7 @@ namespace RealEstateApp
     public partial class AddEditPropertyPage : ContentPage
     {
         private IRepository Repository;
+        CancellationTokenSource cts;
 
         #region PROPERTIES
         public ObservableCollection<Agent> Agents { get; }
@@ -68,7 +72,16 @@ namespace RealEstateApp
                 Title = "Edit Property";
                 Property = property;
             }
-         
+
+            var current = Connectivity.NetworkAccess;
+
+            if (current != NetworkAccess.Internet)
+            {
+                DisplayAlert("Warning!", "No internet access!", "OK");
+                btnLocateMe.IsVisible = false;
+                btnShowCords.IsVisible = false;
+            }
+
             BindingContext = this;
         }
 
@@ -78,6 +91,7 @@ namespace RealEstateApp
             {
                 StatusMessage = "Please fill in all required fields";
                 StatusColor = Color.Red;
+                Vibration.Vibrate(500);
             }
             else
             {
@@ -100,6 +114,63 @@ namespace RealEstateApp
         private async void CancelSave_Clicked(object sender, System.EventArgs e)
         {
             await Navigation.PopToRootAsync();
+        }
+
+        private async void btnLocateMe_Clicked(object sender, System.EventArgs e)
+        {
+            try
+            {
+                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+                cts = new CancellationTokenSource();
+                Location location = await Geolocation.GetLocationAsync(request, cts.Token);
+
+                if (location != null)
+                {
+                    var placemarks = await Geocoding.GetPlacemarksAsync(location);
+                    Placemark placemark = placemarks.FirstOrDefault();
+
+                    if (placemark != null)
+                    {
+                        string geocodeAddress = $"{placemark.Thoroughfare} {placemark.SubThoroughfare}, " +
+                            $"{placemark.Locality} {placemark.PostalCode}, " +
+                            $"{placemark.CountryName}";
+
+                        Property.Address = geocodeAddress;
+                    }
+
+                    LatitudeLabel.Text = location.Latitude.ToString();
+                    LongitudeLabel.Text = location.Longitude.ToString();
+
+                    Property.Latitude = location.Latitude;
+                    Property.Longitude = location.Longitude;
+                    
+                }
+            }
+            catch (Exception)
+            {
+                cts.Cancel();
+            }
+            
+        }
+
+        private async void btnShowCords_Clicked(object sender, EventArgs e)
+        {
+            if (Property.Address != null)
+            {
+                var locations = await Geocoding.GetLocationsAsync(Property.Address);
+                Location location = locations.FirstOrDefault();
+
+                if (location != null)
+                {
+                    LatitudeLabel.Text = location.Latitude.ToString();
+                    LongitudeLabel.Text = location.Longitude.ToString();
+                }
+            }
+            else
+            {
+                await DisplayAlert("Warning!", "Please add a address!", "ADD NOW");
+                AddressEntryField.Focus();
+            }
         }
     }
 }
