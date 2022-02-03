@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using TinyIoC;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -102,6 +103,34 @@ namespace RealEstateApp
                 MapLaunchOptions options = new MapLaunchOptions { NavigationMode = NavigationMode.Driving };
 
                 await Map.OpenAsync(location, options);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private async void btnBrowserLink_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                await Browser.OpenAsync(Property.NeighbourhoodUrl, BrowserLaunchMode.SystemPreferred);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private async void btnLoadFiles_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string file = Property.ContractFilePath;
+                await Launcher.OpenAsync(new OpenFileRequest
+                {
+                    File = new ReadOnlyFile(file)
+                });
             }
             catch (Exception ex)
             {
