@@ -85,8 +85,10 @@
             <StackLayout Grid.Row="7" Orientation="Horizontal">
                 <Button HorizontalOptions="Start" FontFamily="FA-solid" Text="{Static fa:IconFont.Play}"
                         x:Name="btnPlayText" Clicked="btnPlayText_Clicked"/>
-                <Button HorizontalOptions="End" FontFamily="FA-solid" Text="{Static fa:IconFont.Pause}"
+                <Button HorizontalOptions="Center" FontFamily="FA-solid" Text="{Static fa:IconFont.Pause}"
                         x:Name="btnPauseText" Clicked="btnPauseText_Clicked" IsEnabled="False"/>
+                <Button HorizontalOptions="EndAndExpand" FontFamily="FA-solid" Text="{Static fa:IconFont.Directions}"
+                        x:Name="btnMapDirections" Clicked="btnMapDirections_Clicked"/>
             </StackLayout>
 
             <Grid Grid.Row="8" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *">

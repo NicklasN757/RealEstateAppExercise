@@ -93,5 +93,20 @@ namespace RealEstateApp
                 Console.WriteLine(ex);
             }
         }
+
+        private async void btnMapDirections_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                Location location = new Location((double)Property.Latitude, (double)Property.Longitude);
+                MapLaunchOptions options = new MapLaunchOptions { NavigationMode = NavigationMode.Driving };
+
+                await Map.OpenAsync(location, options);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
     }
 }
