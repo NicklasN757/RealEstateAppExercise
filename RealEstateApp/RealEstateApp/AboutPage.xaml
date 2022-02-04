@@ -14,12 +14,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <ScrollView Grid.Row="0">
+    <Grid RowDefinitions="Auto,Auto" Padding="10">
+        <ScrollView>
             <StackLayout
                 Padding="16,40,16,40"
                 Orientation="Vertical"
@@ -71,5 +67,26 @@
                     TextColor="White" />
             </StackLayout>
         </ScrollView>
+        <StackLayout Grid.Row="1">
+            <Label Text="Settings:" FontSize="Large"/>
+
+            <StackLayout Orientation="Horizontal" BindingContext="{x:Reference Name=PitchSlider}">
+                <Label Text="Pitch:" FontSize="Medium"/>
+                <Label Text="{Binding Value}" VerticalOptions="End"/>
+            </StackLayout>
+            <Slider Minimum="0" Maximum="2" x:Name="PitchSlider" PropertyChanged="PitchSlider_PropertyChanged"
+                    MinimumTrackColor="Blue" MaximumTrackColor="Blue" ThumbColor="Blue"/>
+
+            <StackLayout Orientation="Horizontal" BindingContext="{x:Reference Name=VolumeSlider}">
+                <Label Text="Volume:" FontSize="Medium"/>
+                <Label Text="{Binding Value}" VerticalOptions="End"/>
+            </StackLayout>
+            <Slider Minimum="0" Maximum="1" x:Name="VolumeSlider" PropertyChanged="VolumeSlider_PropertyChanged"
+                    MinimumTrackColor="Blue" MaximumTrackColor="Blue" ThumbColor="Blue"/>
+            
+        </StackLayout>
+        
+        
+        
     </Grid>
 </ContentPage>

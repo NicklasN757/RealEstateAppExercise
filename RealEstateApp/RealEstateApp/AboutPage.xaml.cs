@@ -16,5 +16,15 @@ namespace RealEstateApp
         {
             InitializeComponent();
         }
+
+        private void VolumeSlider_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+
+        }
+
+        private void PitchSlider_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+
+        }
     }
 }
